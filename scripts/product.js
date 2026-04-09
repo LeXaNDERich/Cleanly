@@ -61,8 +61,9 @@
         });
     };
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
         initNavbarToggle();
+        await window.productsReady;
         const params = new URLSearchParams(window.location.search);
         const id = Number(params.get('id'));
         const product = (window.PRODUCTS || []).find((p) => p.id === id);

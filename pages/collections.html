@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AETHERIA — Подборки</title>
+    <title>Cleanly — Подборки</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../styles/catalog.css">
 
     <link rel="shortcut icon" href="../assets/image/favicon.ico" />
-    <meta name="apple-mobile-web-app-title" content="Aetheria" />
+    <meta name="apple-mobile-web-app-title" content="Cleanly" />
     <link rel="manifest" href="/site.webmanifest" />
 </head>
 <body>
@@ -22,14 +22,15 @@
                 <div class="flex items-center">
                     <a href="../index.html" class="flex items-center mr-6 md:mr-8 no-underline hover:opacity-90 transition-opacity" aria-label="На главную">
                         <div class="w-8 h-8 md:w-11 md:h-11 logo-gradient rounded-md flex items-center justify-center mr-3">
-                            <span class="brand-font text-white text-xl md:text-2xl font-bold">B</span>
+                            <span class="brand-font text-white text-xl md:text-2xl font-bold">C</span>
                         </div>
-                        <span class="brand-font text-black text-xl md:text-2xl font-bold logo-text">Blossom</span>
+                        <span class="brand-font text-black text-xl md:text-2xl font-bold logo-text">Cleanly</span>
                     </a>
                     <div class="desktop-nav-links hidden md:flex gap-6 md:gap-8">
-                        <a href="../index.html" class="text-base md:text-lg text-gray-700 hover:text-purple-600 transition-colors whitespace-nowrap">Главная</a>
-                        <a href="./catalog.html" class="text-base md:text-lg text-gray-700 hover:text-purple-600 transition-colors whitespace-nowrap">Каталог</a>
-                        <a href="faq.html" class="text-base md:text-lg text-gray-700 hover:text-purple-600 transition-colors whitespace-nowrap">Помощь</a>
+                        <a href="../index.html" class="text-base md:text-lg text-gray-700 hover:text-sky-600 transition-colors whitespace-nowrap">Главная</a>
+                        <a href="./catalog.html" class="text-base md:text-lg text-gray-700 hover:text-sky-600 transition-colors whitespace-nowrap">Каталог</a>
+                        <a href="faq.html" class="text-base md:text-lg text-gray-700 hover:text-sky-600 transition-colors whitespace-nowrap">Помощь</a>
+                        <a href="./admin.html" class="admin-nav-link hidden" data-admin-link><i class="fa-solid fa-shield-halved"></i> Админ-панель</a>
                     </div>
                 </div>
 
@@ -68,6 +69,7 @@
                     <a href="../index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded">Главная</a>
                     <a href="./catalog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded">Каталог</a>
                     <a href="faq.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded">Помощь</a>
+                    <a href="./admin.html" class="admin-nav-link mobile hidden" data-admin-link><i class="fa-solid fa-shield-halved"></i> Админ-панель</a>
                     <button class="cart-open-btn w-full flex items-center justify-center border border-gray-300 rounded-md px-4 py-2 mt-2 hover:bg-gray-50 transition-colors relative">
                         <i class="fas fa-shopping-cart text-gray-700 mr-2"></i>
                         <span class="font-semibold text-gray-700">Корзина</span>
@@ -116,43 +118,43 @@
                 <section class="lg:w-4/5 order-1 lg:order-2">
                     <div class="collections-wrapper">
                         <div class="collections-header">
-                            <h2 class="text-xl font-semibold text-gray-800">Подборки красоты</h2>
+                            <h2 class="text-xl font-semibold text-gray-800">Категории товаров</h2>
                         </div>
                         <div class="collections-grid">
-                            <div class="collection-card" data-filter="Уход за кожей">
+                            <div class="collection-card" data-filter="Чистящие средства">
                                 <div class="collection-top">
-                                    <i class="fa-solid fa-spa fa-3x"></i>
+                                    <i class="fa-solid fa-spray-can-sparkles fa-3x"></i>
                                 </div>
                                 <div class="collection-bottom">
-                                    <div class="collection-title">Уход за кожей</div>
-                                    <div class="collection-subtitle">Наборы и базовый уход</div>
+                                    <div class="collection-title">Чистящие средства</div>
+                                    <div class="collection-subtitle">Уборка и дезинфекция</div>
                                 </div>
                             </div>
-                            <div class="collection-card" data-filter="Косметика">
+                            <div class="collection-card" data-filter="Кухонные принадлежности">
                                 <div class="collection-top">
-                                    <i class="fa-solid fa-pump-soap fa-3x"></i>
+                                    <i class="fa-solid fa-kitchen-set fa-3x"></i>
                                 </div>
                                 <div class="collection-bottom">
-                                    <div class="collection-title">Косметика</div>
-                                    <div class="collection-subtitle">Макияж на каждый день</div>
+                                    <div class="collection-title">Кухонные принадлежности</div>
+                                    <div class="collection-subtitle">Посуда, губки, контейнеры</div>
                                 </div>
                             </div>
-                            <div class="collection-card" data-filter="Уход за телом">
+                            <div class="collection-card" data-filter="Стирка и уход за бельём">
                                 <div class="collection-top">
-                                    <i class="fa-solid fa-wand-magic-sparkles fa-3x"></i>
+                                    <i class="fa-solid fa-shirt fa-3x"></i>
                                 </div>
                                 <div class="collection-bottom">
-                                    <div class="collection-title">Уход за телом</div>
-                                    <div class="collection-subtitle">Массаж, SPA и уход</div>
+                                    <div class="collection-title">Стирка и уход за бельём</div>
+                                    <div class="collection-subtitle">Порошки, кондиционеры, корзины</div>
                                 </div>
                             </div>
-                            <div class="collection-card" data-filter="Волосы и ногти">
+                            <div class="collection-card" data-filter="Товары для дома">
                                 <div class="collection-top">
-                                    <i class="fa-solid fa-hand-sparkles fa-3x"></i>
+                                    <i class="fa-solid fa-house-chimney fa-3x"></i>
                                 </div>
                                 <div class="collection-bottom">
-                                    <div class="collection-title">Волосы и ногти</div>
-                                    <div class="collection-subtitle">Укладка, маникюр, уход</div>
+                                    <div class="collection-title">Товары для дома</div>
+                                    <div class="collection-subtitle">Хранение, организация, уют</div>
                                 </div>
                             </div>
                         </div>
@@ -165,9 +167,9 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 footer-content">
                     <div class="md:col-span-1">
-                        <h3 class="brand-font text-lg font-semibold mb-2">AETHERIA</h3>
+                        <h3 class="brand-font text-lg font-semibold mb-2">Cleanly</h3>
                         <p class="text-base text-white/50 leading-5">
-                            Интернет-магазин товаров красоты и здоровья.<br> Безопасность, скорость и гарантия качества.
+                            Интернет-магазин хозяйственных товаров для дома.<br> Качество, удобство и доступные цены.
                         </p>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -185,11 +187,11 @@
                             <ul class="space-y-2 text-sm text-white/50">
                                 <li class="flex items-center">
                                     <i class="fas fa-envelope mr-2"></i>
-                                    <a href="mailto:support@blossom.store" class="hover:text-white transition-colors">support@blossom.store</a>
+                                    <a href="mailto:support@cleanly.store" class="hover:text-white transition-colors">support@cleanly.store</a>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-headset mr-2"></i>
-                                    <a href="mailto:support@blossom.store" class="hover:text-white transition-colors">Техническая поддержка</a>
+                                    <a href="mailto:support@cleanly.store" class="hover:text-white transition-colors">Техническая поддержка</a>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fab fa-telegram mr-2"></i>
@@ -258,4 +260,3 @@
     </script>
 </body>
 </html>
-

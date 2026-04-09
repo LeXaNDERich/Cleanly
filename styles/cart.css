@@ -12,7 +12,7 @@
     font-weight: 700;
     display: grid;
     place-items: center;
-    box-shadow: 0 6px 16px rgba(225, 29, 72, 0.22);
+    box-shadow: 0 6px 16px rgba(14, 165, 233, 0.22);
 }
 
 .cart-overlay {
@@ -271,7 +271,7 @@ body.cart-locked {
     border: none;
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
     color: #ffffff;
-    box-shadow: 0 12px 24px rgba(225, 29, 72, 0.22);
+    box-shadow: 0 12px 24px rgba(14, 165, 233, 0.22);
 }
 
 .cart-clear:hover {
@@ -294,7 +294,7 @@ body.cart-locked {
 }
 
 .cart-email:focus {
-    outline: 2px solid rgba(225, 29, 72, 0.45);
+    outline: 2px solid rgba(14, 165, 233, 0.45);
     outline-offset: 2px;
 }
 
@@ -340,5 +340,57 @@ body.theme-dark .cart-clear {
     background: #111827;
     border-color: #1f2937;
     color: #e5e7eb;
+}
+
+.checkout-notification {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    box-shadow: 0 12px 40px rgba(14, 165, 233, 0.35);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    white-space: nowrap;
+}
+
+.checkout-notification.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.cart-added-toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #10b981;
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.35);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    max-width: 90vw;
+}
+
+.cart-added-toast.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
 }
 

@@ -42,7 +42,7 @@
 .faq-search-input:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.12);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12);
 }
 
 .faq-search-button {

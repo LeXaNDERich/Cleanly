@@ -1,104 +1,125 @@
-// Единый список продуктов, доступный на всех страницах
-// Плейсхолдер, если у товара нет картинки. Можно заменить на свою.
-window.PLACEHOLDER_IMAGE = 'https://placehold.co/320x200/e5e7eb/9ca3af?text=Beauty';
+window.PLACEHOLDER_IMAGE = 'https://placehold.co/320x200/e5e7eb/9ca3af?text=Cleanly';
+window.PRODUCTS = [];
 
-// Каталог под тематику "Красота и здоровье"
-window.PRODUCTS = [
-    {
-        id: 1,
-        title: 'Набор для ухода за лицом «Daily Glow»',
-        desc: 'Очищающий гель, тоник и увлажняющий крем для нормальной и чувствительной кожи.',
-        price: 2490,
-        label: 'Уход за кожей',
-        labelColor: 'default',
-        brand: 'LumiSkin',
-        image: '../assets/image/face1.jpg',
-        rating: 4.8,
-        reviews: 42
-    },
-    {
-        id: 2,
-        title: 'Сыворотка с витамином C 10%',
-        desc: 'Осветляет тон, уменьшает пигментацию и следы пост-акне, придаёт коже здоровое сияние.',
-        price: 1790,
-        label: 'Уход за кожей',
-        labelColor: 'default',
-        brand: 'Pure Vitamin',
-        image: '../assets/image/syvorotka.jpg',
-        rating: 4.7,
-        reviews: 35
-    },
-    {
-        id: 3,
-        title: 'Гель-крем для проблемной кожи',
-        desc: 'Лёгкая текстура с ниацинамидом и цинком, помогает контролировать высыпания и жирный блеск.',
-        price: 1390,
-        label: 'Уход за кожей',
-        labelColor: 'gray',
-        brand: 'DermaCare',
-        image: '../assets/image/face2.jpg',
-        rating: 4.6,
-        reviews: 28
-    },
-    {
-        id: 4,
-        title: 'Палетка теней «Nude Beauty»',
-        desc: '12 нюдовых оттенков для повседневного и вечернего макияжа, легко растушёвываются.',
-        price: 1590,
-        label: 'Косметика',
-        labelColor: 'blue',
-        brand: 'ColorMe',
-        image: '../assets/image/palet.jpg',
-        rating: 4.9,
-        reviews: 51
-    },
-    {
-        id: 5,
-        title: 'Губная помада «Natural Rose»',
-        desc: 'Кремовая формула с ухаживающими маслами, натуральный розовый оттенок на каждый день.',
-        price: 890,
-        label: 'Косметика',
-        labelColor: 'blue',
-        brand: 'ColorMe',
-        image: '../assets/image/pomad.jpg',
-        rating: 4.6,
-        reviews: 19
-    },
-    {
-        id: 6,
-        title: 'Масло для массажа «Релакс»',
-        desc: 'Ароматическое масло для расслабляющего массажа тела, снимает напряжение и увлажняет кожу.',
-        price: 890,
-        label: 'Уход за телом',
-        labelColor: 'default',
-        brand: 'Blossom SPA',
-        image: '../assets/image/malso.jpg',
-        rating: 4.9,
-        reviews: 33
-    },
-    {
-        id: 7,
-        title: 'Набор для ухода за волосами «Сияние»',
-        desc: 'Шампунь, бальзам и термозащитный спрей для любой длины волос, придают блеск и мягкость.',
-        price: 1650,
-        label: 'Волосы и ногти',
-        labelColor: 'gray',
-        brand: 'Blossom Hair',
-        image: '../assets/image/hair.jpg',
-        rating: 4.7,
-        reviews: 24
-    },
-    {
-        id: 8,
-        title: 'Набор лаков для ногтей «Натуральные оттенки»',
-        desc: 'Гель-лаки в нюдовой палитре, стойкое покрытие до 2 недель, в наборе 6 оттенков.',
-        price: 1290,
-        label: 'Волосы и ногти',
-        labelColor: 'gray',
-        brand: 'Blossom Nails',
-        image: '../assets/image/lak.jpg',
-        rating: 4.8,
-        reviews: 29
-    }
-];
+const resolveProductImage = (product, isSubPage) => {
+    const prefix = isSubPage ? '../assets/image/' : 'assets/image/';
+    return `${prefix}${Number(product.id)}.jpg`;
+};
 
+const normalizeProducts = (products, isSubPage) =>
+    products.map((product) => ({
+        ...product,
+        image: resolveProductImage(product, isSubPage)
+    }));
+
+const applyCustomProducts = () => {
+    try {
+        const custom = JSON.parse(localStorage.getItem('cleanly_products_custom') || '[]');
+        if (custom.length) window.PRODUCTS = window.PRODUCTS.concat(custom);
+    } catch (_) {}
+    try {
+        const deleted = JSON.parse(localStorage.getItem('cleanly_deleted_products') || '[]');
+        if (deleted.length) {
+            const set = new Set(deleted);
+            window.PRODUCTS = window.PRODUCTS.filter(p => !set.has(p.id));
+        }
+    } catch (_) {}
+};
+
+window.productsReady = (async () => {
+    const isSubPage = window.location.pathname.includes('/pages/');
+    const jsonPath = isSubPage ? '../data/products.json' : 'data/products.json';
+
+    try {
+        const res = await fetch(jsonPath);
+        if (!res.ok) throw new Error(res.status);
+        window.PRODUCTS = normalizeProducts(await res.json(), isSubPage);
+        applyCustomProducts();
+        return;
+    } catch (_) {}
+
+    try {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', jsonPath, false);
+        xhr.send(null);
+        if (xhr.status === 0 || xhr.status === 200) {
+            window.PRODUCTS = normalizeProducts(JSON.parse(xhr.responseText), isSubPage);
+            applyCustomProducts();
+            return;
+        }
+    } catch (_) {}
+
+    window.PRODUCTS = normalizeProducts([
+        { id:1, title:'Набор для уборки «Чистый дом»', desc:'Швабра с отжимом, ведро, щётка и совок. Всё для идеальной чистоты в доме.', price:2490, label:'Чистящие средства', labelColor:'default', brand:'CleanHome', image:'https://images.unsplash.com/photo-1643107303813-077f2061cec1?w=400&h=300&fit=crop&q=80', rating:4.8, reviews:42 },
+        { id:2, title:'Средство для мытья посуды «Лимонная свежесть»', desc:'Концентрированный гель с ароматом лимона. Эффективно удаляет жир.', price:349, label:'Кухонные принадлежности', labelColor:'blue', brand:'FreshDish', image:'https://images.unsplash.com/photo-1585318518669-3365d350fcfa?w=400&h=300&fit=crop&q=80', rating:4.7, reviews:35 },
+        { id:3, title:'Стиральный порошок «Горная свежесть» 3 кг', desc:'Для белого и цветного белья. Отлично выводит пятна при любой температуре.', price:890, label:'Стирка и уход за бельём', labelColor:'gray', brand:'WashPro', image:'https://images.unsplash.com/photo-1721934081767-1fb587a9c7f1?w=400&h=300&fit=crop&q=80', rating:4.6, reviews:28 },
+        { id:4, title:'Набор губок для уборки (10 шт.)', desc:'Прочные губки с абразивным слоем для кухни и ванной. Не царапают поверхности.', price:290, label:'Кухонные принадлежности', labelColor:'blue', brand:'SpongeMax', image:'https://images.unsplash.com/photo-1762215361982-1050c1079875?w=400&h=300&fit=crop&q=80', rating:4.9, reviews:51 },
+        { id:5, title:'Универсальное чистящее средство «Антибактериальное»', desc:'Спрей для всех поверхностей. Убивает 99.9% бактерий.', price:450, label:'Чистящие средства', labelColor:'default', brand:'CleanHome', image:'https://images.unsplash.com/photo-1755752919883-e5d0912e2321?w=400&h=300&fit=crop&q=80', rating:4.6, reviews:19 },
+        { id:6, title:'Набор полотенец из микрофибры (5 шт.)', desc:'Ультравпитывающие салфетки для уборки без разводов.', price:690, label:'Товары для дома', labelColor:'default', brand:'MicroClean', image:'https://images.unsplash.com/photo-1737091901849-f79fc399ac14?w=400&h=300&fit=crop&q=80', rating:4.9, reviews:33 },
+        { id:7, title:'Корзина для белья складная', desc:'Компактная корзина из бамбука с тканевым чехлом. Вместимость 60 литров.', price:1650, label:'Товары для дома', labelColor:'gray', brand:'HomeTidy', image:'https://images.unsplash.com/photo-1635681598234-49b6e2c53e01?w=400&h=300&fit=crop&q=80', rating:4.7, reviews:24 },
+        { id:8, title:'Набор контейнеров для хранения (6 шт.)', desc:'Герметичные контейнеры для круп, специй и продуктов. Прозрачные крышки.', price:1290, label:'Кухонные принадлежности', labelColor:'blue', brand:'FreshKeep', image:'https://images.unsplash.com/photo-1637575891990-1f06628aed0d?w=400&h=300&fit=crop&q=80', rating:4.8, reviews:29 },
+        { id:9, title:'Средство для чистки стёкол «Блеск»', desc:'Спрей без разводов с нашатырём. Идеально для окон, зеркал и стеклянных поверхностей.', price:320, label:'Чистящие средства', labelColor:'default', brand:'GlassShine', image:'https://images.unsplash.com/photo-1643107303813-077f2061cec1?w=400&h=300&fit=crop&q=80', rating:4.5, reviews:38 },
+        { id:10, title:'Гель для стирки «Нежность» 2 л', desc:'Для деликатных тканей: шёлк, шерсть, кашемир. Сохраняет цвет и мягкость.', price:680, label:'Стирка и уход за бельём', labelColor:'gray', brand:'WashPro', image:'https://images.unsplash.com/photo-1585318518669-3365d350fcfa?w=400&h=300&fit=crop&q=80', rating:4.7, reviews:22 },
+        { id:11, title:'Сушилка для посуды настольная', desc:'Компактная двухъярусная сушилка из нержавеющей стали с поддоном для воды.', price:1890, label:'Кухонные принадлежности', labelColor:'blue', brand:'KitchenPro', image:'https://images.unsplash.com/photo-1721934081767-1fb587a9c7f1?w=400&h=300&fit=crop&q=80', rating:4.6, reviews:17 },
+        { id:12, title:'Освежитель воздуха «Лаванда»', desc:'Автоматический спрей для дома. Один баллон рассчитан на 60 дней.', price:590, label:'Товары для дома', labelColor:'default', brand:'AirFresh', image:'https://images.unsplash.com/photo-1762215361982-1050c1079875?w=400&h=300&fit=crop&q=80', rating:4.4, reviews:45 },
+        { id:13, title:'Средство для прочистки труб «Трубочист»', desc:'Гель растворяет жир, волосы и засоры за 15 минут. Безопасен для пластиковых труб.', price:380, label:'Чистящие средства', labelColor:'default', brand:'PipeMaster', image:'https://images.unsplash.com/photo-1755752919883-e5d0912e2321?w=400&h=300&fit=crop&q=80', rating:4.8, reviews:62 },
+        { id:14, title:'Кондиционер для белья «Весенние цветы» 1.5 л', desc:'Придаёт мягкость и приятный аромат белью на 7 дней после стирки.', price:420, label:'Стирка и уход за бельём', labelColor:'gray', brand:'SoftTouch', image:'https://images.unsplash.com/photo-1737091901849-f79fc399ac14?w=400&h=300&fit=crop&q=80', rating:4.5, reviews:31 },
+        { id:15, title:'Набор разделочных досок (3 шт.)', desc:'Пластиковые доски разных размеров с антискользящим покрытием.', price:790, label:'Кухонные принадлежности', labelColor:'blue', brand:'KitchenPro', image:'https://images.unsplash.com/photo-1635681598234-49b6e2c53e01?w=400&h=300&fit=crop&q=80', rating:4.7, reviews:28 },
+        { id:16, title:'Ведро с отжимом для швабры', desc:'Механический отжим, колёсики для лёгкого перемещения. Объём 12 литров.', price:1490, label:'Чистящие средства', labelColor:'default', brand:'CleanHome', image:'https://images.unsplash.com/photo-1637575891990-1f06628aed0d?w=400&h=300&fit=crop&q=80', rating:4.8, reviews:55 },
+        { id:17, title:'Органайзер для ванной на присосках', desc:'Двухъярусная полка для шампуней и мыла. Не требует сверления.', price:590, label:'Товары для дома', labelColor:'default', brand:'HomeTidy', image:'https://images.unsplash.com/photo-1643107303813-077f2061cec1?w=400&h=300&fit=crop&q=80', rating:4.3, reviews:19 },
+        { id:18, title:'Пятновыводитель «Ваниш» спрей 500 мл', desc:'Моментально удаляет пятна от кофе, вина, травы и жира.', price:490, label:'Стирка и уход за бельём', labelColor:'gray', brand:'StainOff', image:'https://images.unsplash.com/photo-1585318518669-3365d350fcfa?w=400&h=300&fit=crop&q=80', rating:4.6, reviews:47 },
+        { id:19, title:'Термокружка 450 мл', desc:'Двойные стенки из нержавеющей стали. Держит тепло 6 часов, холод 12 часов.', price:890, label:'Кухонные принадлежности', labelColor:'blue', brand:'ThermoLife', image:'https://images.unsplash.com/photo-1721934081767-1fb587a9c7f1?w=400&h=300&fit=crop&q=80', rating:4.9, reviews:73 },
+        { id:20, title:'Средство для мытья полов «Сосновый бор»', desc:'Концентрат с натуральным маслом сосны. Дезинфицирует и освежает.', price:350, label:'Чистящие средства', labelColor:'default', brand:'FloorClean', image:'https://images.unsplash.com/photo-1762215361982-1050c1079875?w=400&h=300&fit=crop&q=80', rating:4.5, reviews:34 },
+        { id:21, title:'Коврик для сушки посуды из микрофибры', desc:'Впитывает воду, защищает столешницу. Размер 40×50 см.', price:390, label:'Кухонные принадлежности', labelColor:'blue', brand:'MicroClean', image:'https://images.unsplash.com/photo-1755752919883-e5d0912e2321?w=400&h=300&fit=crop&q=80', rating:4.4, reviews:21 },
+        { id:22, title:'Набор вешалок для одежды (20 шт.)', desc:'Бархатные вешалки с антискользящим покрытием. Экономят место в шкафу.', price:990, label:'Товары для дома', labelColor:'default', brand:'HomeTidy', image:'https://images.unsplash.com/photo-1737091901849-f79fc399ac14?w=400&h=300&fit=crop&q=80', rating:4.8, reviews:56 },
+        { id:23, title:'Таблетки для посудомоечной машины (50 шт.)', desc:'Растворяют жир при любой температуре. Содержат ополаскиватель и соль.', price:1190, label:'Кухонные принадлежности', labelColor:'blue', brand:'DishTab', image:'https://images.unsplash.com/photo-1635681598234-49b6e2c53e01?w=400&h=300&fit=crop&q=80', rating:4.7, reviews:41 },
+        { id:24, title:'Щётка для унитаза с подставкой', desc:'Силиконовая щётка: не впитывает влагу, быстро сохнет. Стильный дизайн.', price:690, label:'Чистящие средства', labelColor:'default', brand:'BathClean', image:'https://images.unsplash.com/photo-1637575891990-1f06628aed0d?w=400&h=300&fit=crop&q=80', rating:4.6, reviews:29 },
+        { id:25, title:'Капсулы для стирки «Тройной эффект» (30 шт.)', desc:'Стирка, кондиционер и защита цвета в одной капсуле.', price:750, label:'Стирка и уход за бельём', labelColor:'gray', brand:'WashPro', image:'https://images.unsplash.com/photo-1643107303813-077f2061cec1?w=400&h=300&fit=crop&q=80', rating:4.8, reviews:39 },
+        { id:26, title:'Диспенсер для мыла сенсорный', desc:'Бесконтактная подача мыла. Работает от батареек. Объём 300 мл.', price:1290, label:'Товары для дома', labelColor:'default', brand:'SmartHome', image:'https://images.unsplash.com/photo-1585318518669-3365d350fcfa?w=400&h=300&fit=crop&q=80', rating:4.5, reviews:27 },
+        { id:27, title:'Чистящий крем «Универсал» 500 мл', desc:'Для плит, раковин и кафеля. Удаляет известковый налёт и ржавчину.', price:290, label:'Чистящие средства', labelColor:'default', brand:'CleanHome', image:'https://images.unsplash.com/photo-1721934081767-1fb587a9c7f1?w=400&h=300&fit=crop&q=80', rating:4.4, reviews:33 },
+        { id:28, title:'Силиконовые формы для выпечки (6 шт.)', desc:'Разные формы: кексы, маффины, пончики. Антипригарное покрытие.', price:590, label:'Кухонные принадлежности', labelColor:'blue', brand:'BakeJoy', image:'https://images.unsplash.com/photo-1762215361982-1050c1079875?w=400&h=300&fit=crop&q=80', rating:4.7, reviews:18 },
+        { id:29, title:'Гладильная доска складная', desc:'Регулировка высоты, подставка для утюга. Чехол из хлопка с паропропускной подложкой.', price:2990, label:'Стирка и уход за бельём', labelColor:'gray', brand:'IronEase', image:'https://images.unsplash.com/photo-1755752919883-e5d0912e2321?w=400&h=300&fit=crop&q=80', rating:4.6, reviews:15 },
+        { id:30, title:'Набор мусорных пакетов (150 шт.)', desc:'С завязками, 35 литров. Плотный полиэтилен, не рвутся.', price:350, label:'Товары для дома', labelColor:'default', brand:'EcoWaste', image:'https://images.unsplash.com/photo-1737091901849-f79fc399ac14?w=400&h=300&fit=crop&q=80', rating:4.3, reviews:64 },
+        { id:31, title:'Средство для чистки духовки «Жироудалитель»', desc:'Пенный спрей растворяет нагар за 30 минут без вредных испарений.', price:520, label:'Чистящие средства', labelColor:'default', brand:'OvenClean', image:'https://images.unsplash.com/photo-1635681598234-49b6e2c53e01?w=400&h=300&fit=crop&q=80', rating:4.7, reviews:26 },
+        { id:32, title:'Контейнер для стирального порошка 5 л', desc:'Герметичная крышка с мерной ложкой. Прозрачный, удобно видеть остаток.', price:490, label:'Стирка и уход за бельём', labelColor:'gray', brand:'HomeTidy', image:'https://images.unsplash.com/photo-1637575891990-1f06628aed0d?w=400&h=300&fit=crop&q=80', rating:4.5, reviews:12 },
+        { id:33, title:'Набор кухонных полотенец (5 шт.)', desc:'100% хлопок, размер 40×60 см. Хорошо впитывают, быстро сохнут.', price:590, label:'Кухонные принадлежности', labelColor:'blue', brand:'KitchenPro', image:'https://images.unsplash.com/photo-1643107303813-077f2061cec1?w=400&h=300&fit=crop&q=80', rating:4.6, reviews:37 },
+        { id:34, title:'Робот-пылесос «SmartClean Mini»', desc:'Автоматическая уборка: сухая + влажная. Управление со смартфона.', price:8990, label:'Товары для дома', labelColor:'default', brand:'SmartHome', image:'https://images.unsplash.com/photo-1585318518669-3365d350fcfa?w=400&h=300&fit=crop&q=80', rating:4.4, reviews:88 },
+        { id:35, title:'Антинакипин для чайников и кофемашин', desc:'Порошок на основе лимонной кислоты. 4 пакетика в упаковке.', price:190, label:'Чистящие средства', labelColor:'default', brand:'ScaleFree', image:'https://images.unsplash.com/photo-1721934081767-1fb587a9c7f1?w=400&h=300&fit=crop&q=80', rating:4.8, reviews:52 },
+        { id:36, title:'Сетка для стирки деликатных вещей (3 шт.)', desc:'Разные размеры для бюстгальтеров, носков и кофт. Защищают от деформации.', price:390, label:'Стирка и уход за бельём', labelColor:'gray', brand:'WashCare', image:'https://images.unsplash.com/photo-1762215361982-1050c1079875?w=400&h=300&fit=crop&q=80', rating:4.7, reviews:23 },
+        { id:37, title:'Держатель для бумажных полотенец', desc:'Настенный или настольный вариант. Нержавеющая сталь.', price:490, label:'Кухонные принадлежности', labelColor:'blue', brand:'KitchenPro', image:'https://images.unsplash.com/photo-1755752919883-e5d0912e2321?w=400&h=300&fit=crop&q=80', rating:4.5, reviews:14 },
+        { id:38, title:'Мешки для пылесоса универсальные (5 шт.)', desc:'Подходят для 90% моделей. Трёхслойная фильтрация, удерживают пыль.', price:450, label:'Товары для дома', labelColor:'default', brand:'DustFree', image:'https://images.unsplash.com/photo-1737091901849-f79fc399ac14?w=400&h=300&fit=crop&q=80', rating:4.6, reviews:31 },
+        { id:39, title:'Средство от плесени «Антигрибок» спрей', desc:'Уничтожает плесень и грибок на кафеле, швах и силиконе.', price:410, label:'Чистящие средства', labelColor:'default', brand:'MoldStop', image:'https://images.unsplash.com/photo-1635681598234-49b6e2c53e01?w=400&h=300&fit=crop&q=80', rating:4.8, reviews:44 },
+        { id:40, title:'Отбеливатель кислородный 1 кг', desc:'Безопасен для цветных тканей. Удаляет серость и желтизну.', price:350, label:'Стирка и уход за бельём', labelColor:'gray', brand:'OxyWhite', image:'https://images.unsplash.com/photo-1637575891990-1f06628aed0d?w=400&h=300&fit=crop&q=80', rating:4.5, reviews:29 },
+        { id:41, title:'Дозатор для моющего средства с губкой', desc:'Нажал — и средство на губке. Экономит расход геля для посуды.', price:490, label:'Кухонные принадлежности', labelColor:'blue', brand:'FreshDish', image:'https://images.unsplash.com/photo-1643107303813-077f2061cec1?w=400&h=300&fit=crop&q=80', rating:4.7, reviews:36 },
+        { id:42, title:'Коврик придверный грязезащитный', desc:'Микрофибра + резиновая основа. Впитывает влагу и задерживает грязь.', price:890, label:'Товары для дома', labelColor:'default', brand:'DoorMat', image:'https://images.unsplash.com/photo-1585318518669-3365d350fcfa?w=400&h=300&fit=crop&q=80', rating:4.4, reviews:48 },
+        { id:43, title:'Перчатки хозяйственные латексные (3 пары)', desc:'Прочные, с хлопковым напылением. Размеры M и L.', price:290, label:'Чистящие средства', labelColor:'default', brand:'HandGuard', image:'https://images.unsplash.com/photo-1721934081767-1fb587a9c7f1?w=400&h=300&fit=crop&q=80', rating:4.6, reviews:57 },
+        { id:44, title:'Крахмал для белья спрей 400 мл', desc:'Придаёт рубашкам и постельному белью идеальную форму при глажке.', price:290, label:'Стирка и уход за бельём', labelColor:'gray', brand:'IronEase', image:'https://images.unsplash.com/photo-1762215361982-1050c1079875?w=400&h=300&fit=crop&q=80', rating:4.3, reviews:11 },
+        { id:45, title:'Овощечистка с керамическим лезвием', desc:'Острое лезвие, эргономичная ручка. Подходит для овощей и фруктов.', price:350, label:'Кухонные принадлежности', labelColor:'blue', brand:'SharpCut', image:'https://images.unsplash.com/photo-1755752919883-e5d0912e2321?w=400&h=300&fit=crop&q=80', rating:4.8, reviews:25 },
+        { id:46, title:'Увлажнитель воздуха ультразвуковой 2 л', desc:'Тихая работа, автоотключение. Подсветка с выбором цвета.', price:2490, label:'Товары для дома', labelColor:'default', brand:'AirFresh', image:'https://images.unsplash.com/photo-1737091901849-f79fc399ac14?w=400&h=300&fit=crop&q=80', rating:4.7, reviews:63 },
+        { id:47, title:'Меламиновые губки (10 шт.)', desc:'Удаляют следы маркера, въевшуюся грязь и разводы без химии.', price:250, label:'Чистящие средства', labelColor:'default', brand:'MagicSponge', image:'https://images.unsplash.com/photo-1635681598234-49b6e2c53e01?w=400&h=300&fit=crop&q=80', rating:4.9, reviews:71 },
+        { id:48, title:'Корзина для хранения плетёная (набор 3 шт.)', desc:'Из натурального ротанга. Разные размеры для полок и шкафов.', price:1490, label:'Товары для дома', labelColor:'gray', brand:'HomeTidy', image:'https://images.unsplash.com/photo-1637575891990-1f06628aed0d?w=400&h=300&fit=crop&q=80', rating:4.6, reviews:22 },
+        { id:49, title:'Средство для чистки ковров «Пенное»', desc:'Глубоко проникает в ворс, удаляет пятна и неприятные запахи.', price:580, label:'Чистящие средства', labelColor:'default', brand:'CarpetFresh', image:'https://images.unsplash.com/photo-1643107303813-077f2061cec1?w=400&h=300&fit=crop&q=80', rating:4.5, reviews:35 },
+        { id:50, title:'Салфетки для сушильной машины (40 шт.)', desc:'Антистатик, смягчение и приятный аромат при сушке белья.', price:450, label:'Стирка и уход за бельём', labelColor:'gray', brand:'DryFresh', image:'https://images.unsplash.com/photo-1585318518669-3365d350fcfa?w=400&h=300&fit=crop&q=80', rating:4.4, reviews:16 },
+        { id:51, title:'Набор мерных стаканов и ложек', desc:'8 предметов из нержавеющей стали. Точные измерения для рецептов.', price:690, label:'Кухонные принадлежности', labelColor:'blue', brand:'KitchenPro', image:'https://images.unsplash.com/photo-1721934081767-1fb587a9c7f1?w=400&h=300&fit=crop&q=80', rating:4.8, reviews:32 },
+        { id:52, title:'Ночник с датчиком движения', desc:'Светодиодный, на батарейках. Включается при обнаружении движения.', price:490, label:'Товары для дома', labelColor:'default', brand:'SmartHome', image:'https://images.unsplash.com/photo-1762215361982-1050c1079875?w=400&h=300&fit=crop&q=80', rating:4.7, reviews:53 },
+        { id:53, title:'Антижир для кухни спрей 750 мл', desc:'Мощная формула против застарелого жира на вытяжке, плите и стенах.', price:390, label:'Чистящие средства', labelColor:'default', brand:'GreaseOff', image:'https://images.unsplash.com/photo-1755752919883-e5d0912e2321?w=400&h=300&fit=crop&q=80', rating:4.6, reviews:43 },
+        { id:54, title:'Прищепки для белья усиленные (30 шт.)', desc:'Из прочного пластика с пружиной из нержавеющей стали. Не ломаются.', price:190, label:'Стирка и уход за бельём', labelColor:'gray', brand:'WashCare', image:'https://images.unsplash.com/photo-1737091901849-f79fc399ac14?w=400&h=300&fit=crop&q=80', rating:4.5, reviews:28 },
+        { id:55, title:'Ланч-бокс двухъярусный с приборами', desc:'Герметичный, можно греть в микроволновке. Объём 1.2 литра.', price:790, label:'Кухонные принадлежности', labelColor:'blue', brand:'FreshKeep', image:'https://images.unsplash.com/photo-1635681598234-49b6e2c53e01?w=400&h=300&fit=crop&q=80', rating:4.9, reviews:46 },
+        { id:56, title:'Подставка для обуви 3-ярусная', desc:'Металлический каркас, компактно складывается. Вмещает 12 пар.', price:1290, label:'Товары для дома', labelColor:'default', brand:'HomeTidy', image:'https://images.unsplash.com/photo-1637575891990-1f06628aed0d?w=400&h=300&fit=crop&q=80', rating:4.4, reviews:19 },
+        { id:57, title:'Средство для чистки нержавеющей стали', desc:'Спрей полирует и защищает поверхность от отпечатков пальцев.', price:450, label:'Чистящие средства', labelColor:'default', brand:'SteelShine', image:'https://images.unsplash.com/photo-1643107303813-077f2061cec1?w=400&h=300&fit=crop&q=80', rating:4.7, reviews:21 },
+        { id:58, title:'Верёвка бельевая уличная 20 м', desc:'Стальной трос в полимерной оплётке. Не провисает, не ржавеет.', price:290, label:'Стирка и уход за бельём', labelColor:'gray', brand:'WashCare', image:'https://images.unsplash.com/photo-1585318518669-3365d350fcfa?w=400&h=300&fit=crop&q=80', rating:4.6, reviews:14 },
+        { id:59, title:'Набор лопаток силиконовых (4 шт.)', desc:'Термостойкие до 230°C. Не царапают антипригарное покрытие.', price:590, label:'Кухонные принадлежности', labelColor:'blue', brand:'KitchenPro', image:'https://images.unsplash.com/photo-1721934081767-1fb587a9c7f1?w=400&h=300&fit=crop&q=80', rating:4.8, reviews:38 },
+        { id:60, title:'Набор ароматических свечей (6 шт.)', desc:'Соевый воск, натуральные масла: лаванда, ваниль, корица, мята, роза, жасмин.', price:990, label:'Товары для дома', labelColor:'default', brand:'CandleGlow', image:'https://images.unsplash.com/photo-1762215361982-1050c1079875?w=400&h=300&fit=crop&q=80', rating:4.9, reviews:67 },
+        { id:61, title:'Средство для мытья окон «Кристалл»', desc:'С пульверизатором, не оставляет разводов. Объём 750 мл.', price:310, label:'Чистящие средства', labelColor:'default', brand:'GlassShine', image:'https://images.unsplash.com/photo-1755752919883-e5d0912e2321?w=400&h=300&fit=crop&q=80', rating:4.5, reviews:30 },
+        { id:62, title:'Парогенератор ручной для одежды', desc:'Разглаживает складки за секунды. Компактный, подходит для путешествий.', price:2990, label:'Стирка и уход за бельём', labelColor:'gray', brand:'SteamPro', image:'https://images.unsplash.com/photo-1737091901849-f79fc399ac14?w=400&h=300&fit=crop&q=80', rating:4.7, reviews:34 },
+        { id:63, title:'Бутылка для воды спортивная 750 мл', desc:'Тритан, с мерной шкалой и ситечком для фруктов. BPA-free.', price:490, label:'Кухонные принадлежности', labelColor:'blue', brand:'HydroFit', image:'https://images.unsplash.com/photo-1635681598234-49b6e2c53e01?w=400&h=300&fit=crop&q=80', rating:4.6, reviews:55 },
+        { id:64, title:'Крючки самоклеящиеся (12 шт.)', desc:'Выдерживают до 3 кг. Не оставляют следов. Для кухни и ванной.', price:350, label:'Товары для дома', labelColor:'default', brand:'StickHook', image:'https://images.unsplash.com/photo-1637575891990-1f06628aed0d?w=400&h=300&fit=crop&q=80', rating:4.5, reviews:42 },
+        { id:65, title:'Средство для удаления известкового налёта', desc:'Гель для ванной и смесителей. Возвращает блеск хрому.', price:370, label:'Чистящие средства', labelColor:'default', brand:'LimeOff', image:'https://images.unsplash.com/photo-1643107303813-077f2061cec1?w=400&h=300&fit=crop&q=80', rating:4.7, reviews:25 },
+        { id:66, title:'Чехол для одежды (5 шт.)', desc:'Прозрачные чехлы на молнии, защита от пыли и моли. Размер XL.', price:490, label:'Стирка и уход за бельём', labelColor:'gray', brand:'WashCare', image:'https://images.unsplash.com/photo-1585318518669-3365d350fcfa?w=400&h=300&fit=crop&q=80', rating:4.4, reviews:18 },
+        { id:67, title:'Тёрка многофункциональная 4 в 1', desc:'Крупная, мелкая, шинковка и слайсер. Контейнер с крышкой.', price:690, label:'Кухонные принадлежности', labelColor:'blue', brand:'SharpCut', image:'https://images.unsplash.com/photo-1721934081767-1fb587a9c7f1?w=400&h=300&fit=crop&q=80', rating:4.8, reviews:29 },
+        { id:68, title:'Набор вакуумных пакетов для хранения (8 шт.)', desc:'Для одеял и подушек. Сжимают объём в 3 раза. С ручным насосом.', price:890, label:'Товары для дома', labelColor:'gray', brand:'SpaceSaver', image:'https://images.unsplash.com/photo-1762215361982-1050c1079875?w=400&h=300&fit=crop&q=80', rating:4.6, reviews:40 },
+        { id:69, title:'Средство для ухода за деревянной мебелью', desc:'Полироль с пчелиным воском. Питает дерево и маскирует царапины.', price:490, label:'Чистящие средства', labelColor:'default', brand:'WoodCare', image:'https://images.unsplash.com/photo-1755752919883-e5d0912e2321?w=400&h=300&fit=crop&q=80', rating:4.7, reviews:17 },
+        { id:70, title:'Сушилка для белья напольная складная', desc:'Алюминиевый каркас, 18 метров рабочей длины. Компактное хранение.', price:1990, label:'Стирка и уход за бельём', labelColor:'gray', brand:'DryFresh', image:'https://images.unsplash.com/photo-1737091901849-f79fc399ac14?w=400&h=300&fit=crop&q=80', rating:4.8, reviews:36 }
+    ], isSubPage);
+    applyCustomProducts();
+})();

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blossom - Интернет магазин цифровых товаров и услуг</title>
+    <title>Cleanly - Помощь и FAQ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,32 +12,28 @@
     <link rel="stylesheet" href="../styles/faq.css">
 
     <link rel="shortcut icon" href="../assets/image/favicon.ico" />
-    <meta name="apple-mobile-web-app-title" content="Blossom" />
+    <meta name="apple-mobile-web-app-title" content="Cleanly" />
     <link rel="manifest" href="/site.webmanifest" />
 </head>
 <body>
-    <!-- Контейнер страницы -->
     <div class="page-container">
-        <!-- Навбар (скопировать вставить) --> 
         <nav class="navbar">
             <div class="w-full h-full flex items-center justify-between px-4 md:px-8">
-                <!-- Логотип, название и навигация -->
                 <div class="flex items-center">
                     <a href="../index.html" class="flex items-center mr-6 md:mr-8 no-underline hover:opacity-90 transition-opacity" aria-label="На главную">
                         <div class="w-8 h-8 md:w-11 md:h-11 logo-gradient rounded-md flex items-center justify-center mr-3">
-                            <span class="brand-font text-white text-xl md:text-2xl font-bold">B</span>
+                            <span class="brand-font text-white text-xl md:text-2xl font-bold">C</span>
                         </div>
-                        <span class="brand-font text-black text-xl md:text-2xl font-bold logo-text">Blossom</span>
+                        <span class="brand-font text-black text-xl md:text-2xl font-bold logo-text">Cleanly</span>
                     </a>
-                    <!-- Навигационные ссылки для десктопа -->
                     <div class="desktop-nav-links hidden md:flex gap-6 md:gap-8">
-                        <a href="../index.html" class="text-base md:text-lg text-gray-700 hover:text-purple-600 transition-colors whitespace-nowrap">Главная</a>
-                        <a href="catalog.html" class="text-base md:text-lg text-gray-700 hover:text-purple-600 transition-colors whitespace-nowrap">Каталог</a>
+                        <a href="../index.html" class="text-base md:text-lg text-gray-700 hover:text-sky-600 transition-colors whitespace-nowrap">Главная</a>
+                        <a href="catalog.html" class="text-base md:text-lg text-gray-700 hover:text-sky-600 transition-colors whitespace-nowrap">Каталог</a>
                         <a href="#" class="text-base md:text-lg active transition-colors whitespace-nowrap">Помощь</a>
+                        <a href="./admin.html" class="admin-nav-link hidden" data-admin-link><i class="fa-solid fa-shield-halved"></i> Админ-панель</a>
                     </div>
                 </div>
                 
-                <!-- Кнопки справа для десктопа -->
                 <div class="desktop-buttons hidden md:flex items-center gap-3 md:gap-4">
                     <button class="cart-open-btn flex items-center border border-gray-300 rounded-md px-3 md:px-4 py-2 hover:bg-gray-50 transition-colors whitespace-nowrap relative">
                         <i class="fas fa-shopping-cart text-gray-700 mr-2"></i>
@@ -51,7 +47,7 @@
                             <span data-auth-label>Войти</span>
                         </button>
                         <div class="auth-user-chip hidden" data-auth-chip>
-                            <div class="auth-user-avatar" data-auth-avatar>B</div>
+                            <div class="auth-user-avatar" data-auth-avatar>C</div>
                             <div class="auth-user-meta">
                                 <span class="auth-user-name" data-auth-name>Пользователь</span>
                                 <span class="auth-user-email hidden" data-auth-email></span>
@@ -64,18 +60,17 @@
                     </div>
                 </div>
                 
-                <!-- Бургер-меню для мобильных -->
                 <div class="burger-menu md:hidden flex flex-col cursor-pointer">
                     <div class="burger-line"></div>
                     <div class="burger-line"></div>
                     <div class="burger-line"></div>
                 </div>
                 
-                <!-- Мобильное меню -->
                 <div class="mobile-menu">
                     <a href="../index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded">Главная</a>
                     <a href="catalog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded">Каталог</a>
                     <a href="#" class="block py-2 px-4 active hover:bg-gray-100 rounded">Помощь</a>
+                    <a href="./admin.html" class="admin-nav-link mobile hidden" data-admin-link><i class="fa-solid fa-shield-halved"></i> Админ-панель</a>
                     <button class="cart-open-btn w-full flex items-center justify-center border border-gray-300 rounded-md px-4 py-2 mt-2 hover:bg-gray-50 transition-colors relative">
                         <i class="fas fa-shopping-cart text-gray-700 mr-2"></i>
                         <span class="font-semibold text-gray-700">Корзина</span>
@@ -87,7 +82,7 @@
                             <span data-auth-label>Войти</span>
                         </button>
                         <div class="auth-user-chip hidden" data-auth-chip>
-                            <div class="auth-user-avatar" data-auth-avatar>B</div>
+                            <div class="auth-user-avatar" data-auth-avatar>C</div>
                             <div class="auth-user-meta">
                                 <span class="auth-user-name" data-auth-name>Пользователь</span>
                                 <span class="auth-user-email" data-auth-email></span>
@@ -102,14 +97,11 @@
             </div>
         </nav>
 
-        <!-- Основной контент -->
         <main class="main-content pt-32 pb-20">
             <div class="faq-container">
-                <!-- Заголовок раздела -->
                 <h1 class="faq-title brand-font">Помощь</h1>
                 <p class="faq-subtitle">Ответы на частые вопросы и инструкции по использованию магазина</p>
                 
-                <!-- Поиск по FAQ -->
                 <div class="faq-search">
                     <input type="text" placeholder="Введите ваш вопрос..." class="faq-search-input">
                     <button class="faq-search-button">
@@ -117,38 +109,35 @@
                     </button>
                 </div>
                 
-                <!-- Категории FAQ -->
                 <div class="faq-categories">
                     <button class="faq-category-btn active" data-category="all">Все вопросы</button>
                     <button class="faq-category-btn" data-category="buying">Покупки</button>
-                    <button class="faq-category-btn" data-category="selling">Продажи</button>
+                    <button class="faq-category-btn" data-category="delivery">Доставка</button>
                     <button class="faq-category-btn" data-category="security">Безопасность</button>
                     <button class="faq-category-btn" data-category="payment">Оплата</button>
                 </div>
                 
-                <!-- FAQ аккордеон -->
                 <div class="faq-sections">
-                    <!-- Общие вопросы -->
                     <div class="faq-section">
                         <h2 class="faq-section-title">Общие вопросы</h2>
                         <div class="faq-list">
                             <div class="faq-item active" data-category="all">
                                 <div class="faq-question">
-                                    <span>Что такое Blossom?</span>
+                                    <span>Что такое Cleanly?</span>
                                     <i class="fas fa-chevron-down faq-question-icon"></i>
                                 </div>
                                 <div class="faq-answer">
-                                    <p>Blossom — интернет магазин товаров и услуг красоты. Здесь можно безопасно покупать косметику, средства ухода, запись на услуги и процедуры.</p>
+                                    <p>Cleanly — интернет-магазин хозяйственных товаров для дома. Здесь можно удобно и безопасно покупать чистящие средства, товары для кухни, стирки и уборки с доставкой на дом.</p>
                                 </div>
                             </div>
                             
                             <div class="faq-item" data-category="all security">
                                 <div class="faq-question">
-                                    <span>Как обеспечивается безопасность сделок?</span>
+                                    <span>Как обеспечивается безопасность покупок?</span>
                                     <i class="fas fa-chevron-down faq-question-icon"></i>
                                 </div>
                                 <div class="faq-answer">
-                                    <p>Мы используем многоуровневую систему защиты: двухфакторную аутентификацию, шифрование данных и круглосуточный мониторинг подозрительной активности.</p>
+                                    <p>Мы используем защищённое соединение для всех транзакций, шифрование данных и надёжные платёжные системы. Ваши данные в безопасности.</p>
                                 </div>
                             </div>
                             
@@ -158,15 +147,14 @@
                                     <i class="fas fa-chevron-down faq-question-icon"></i>
                                 </div>
                                 <div class="faq-answer">
-                                    <p>Пока что нету, но в ближайшем будущем мы планируем его реализовать для удобного получения уведомлений.</p>
+                                    <p>Пока что нет, но в ближайшем будущем мы планируем выпустить приложение для удобного заказа и отслеживания доставки.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Вопросы о покупках -->
                     <div class="faq-section">
-                        <h2 class="faq-section-title">Покупки на Blossom</h2>
+                        <h2 class="faq-section-title">Покупки в Cleanly</h2>
                         <div class="faq-list">
                             <div class="faq-item" data-category="buying">
                                 <div class="faq-question">
@@ -175,10 +163,10 @@
                                 </div>
                                 <div class="faq-answer">
                                     <p>1. Найдите нужный товар через поиск или каталог<br>
-                                       2. Нажмите "Купить"<br>
-                                       3. Выберите способ оплаты<br>
-                                       4. Оплатите покупку<br>
-                                       5. Получите доступ к товару в личном кабинете</p>
+                                       2. Добавьте товар в корзину<br>
+                                       3. Перейдите к оформлению заказа<br>
+                                       4. Выберите способ оплаты и доставки<br>
+                                       5. Оплатите и ожидайте доставку</p>
                                 </div>
                             </div>
                             
@@ -188,28 +176,27 @@
                                     <i class="fas fa-chevron-down faq-question-icon"></i>
                                 </div>
                                 <div class="faq-answer">
-                                    <p>Мы принимаем: банковские карты (Visa, Mastercard, МИР), электронные кошельки (ЮMoney, WebMoney), криптовалюты (Bitcoin, Ethereum, USDT), мобильные платежи и другие популярные способы.</p>
+                                    <p>Мы принимаем: банковские карты (Visa, Mastercard, МИР), электронные кошельки (ЮMoney), оплату при получении и безналичный расчёт для юридических лиц.</p>
                                 </div>
                             </div>
                             
-                            <div class="faq-item" data-category="buying">
+                            <div class="faq-item" data-category="buying delivery">
                                 <div class="faq-question">
-                                    <span>Что делать, если товар не валидный?</span>
+                                    <span>Как вернуть товар?</span>
                                     <i class="fas fa-chevron-down faq-question-icon"></i>
                                 </div>
                                 <div class="faq-answer">
-                                    <p>Если вы столкнулись с проблемой, обратитесь в службу поддержки в течение 14 дней с момента покупки.</p>
+                                    <p>Если товар оказался бракованным или не соответствует описанию, обратитесь в службу поддержки в течение 14 дней с момента получения. Мы оформим возврат или обмен.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 
-                <!-- Блок связи с поддержкой -->
                 <div class="faq-contact">
                     <h3 class="faq-contact-title">Нужна помощь?</h3>
-                    <p class="faq-contact-text">Служба поддержки Blossom ответит на любой вопрос. Напишите на почту — мы постараемся ответить в течение 24 часов.</p>
+                    <p class="faq-contact-text">Служба поддержки Cleanly ответит на любой вопрос. Напишите на почту — мы постараемся ответить в течение 24 часов.</p>
                     <div class="faq-contact-buttons">
-                        <a href="mailto:support@blossom.store" class="faq-contact-button primary">
+                        <a href="mailto:support@cleanly.store" class="faq-contact-button primary">
                             <i class="fas fa-envelope"></i>
                             Написать на почту
                         </a>
@@ -218,21 +205,17 @@
             </div>
         </main>
 
-        <!-- Футер -->
         <footer class="footer text-white rounded-t-3xl pt-8 pb-6 mt-auto">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 footer-content">
-                    <!-- Логотип и описание -->
                     <div class="md:col-span-1">
-                        <h3 class="brand-font text-lg font-semibold mb-2">Blossom</h3>
+                        <h3 class="brand-font text-lg font-semibold mb-2">Cleanly</h3>
                         <p class="text-base text-white/50 leading-5">
-                            Интернет-магазин товаров красоты и здоровья.<br> Безопасность, скорость и гарантия качества.
+                            Интернет-магазин хозяйственных товаров для дома.<br> Качество, удобство и доступные цены.
                         </p>
                     </div>
                     
-                    <!-- Правая сторона - остальные разделы -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <!-- Покупателям -->
                         <div>
                             <h4 class="font-bold text-base mb-4">Покупателям</h4>
                             <ul class="space-y-2 text-sm text-white/50">
@@ -243,17 +226,16 @@
                             </ul>
                         </div>
                         
-                        <!-- Контакты -->
                         <div>
                             <h4 class="font-bold text-base mb-4">Контакты</h4>
                             <ul class="space-y-2 text-sm text-white/50">
                                 <li class="flex items-center">
                                     <i class="fas fa-envelope mr-2"></i>
-                                    <a href="mailto:support@blossom.store" class="hover:text-white transition-colors">support@blossom.store</a>
+                                    <a href="mailto:support@cleanly.store" class="hover:text-white transition-colors">support@cleanly.store</a>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-headset mr-2"></i>
-                                    <a href="mailto:support@blossom.store" class="hover:text-white transition-colors">Техническая поддержка</a>
+                                    <a href="mailto:support@cleanly.store" class="hover:text-white transition-colors">Техническая поддержка</a>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fab fa-telegram mr-2"></i>

@@ -1,5 +1,5 @@
 (() => {
-    const THEME_KEY = 'aetheria_theme';
+    const THEME_KEY = 'cleanly_theme';
     const body = document.body;
 
     const applyTheme = (theme) => {

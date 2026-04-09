@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blossom - Интернет магазин цифровых товаров и услуг</title>
+    <title>Cleanly - Интернет-магазин хозяйственных товаров</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,32 +11,27 @@
     <link rel="stylesheet" href="styles/cart.css">
 
     <link rel="shortcut icon" href="assets/image/favicon.ico" />
-    <meta name="apple-mobile-web-app-title" content="Blossom" />
+    <meta name="apple-mobile-web-app-title" content="Cleanly" />
     <link rel="manifest" href="/site.webmanifest" />
 </head>
 <body>
-    <!-- Контейнер страницы -->
     <div class="page-container">
-        <!-- Навбар (скопировать вставить) --> 
         <nav class="navbar">
             <div class="w-full h-full flex items-center justify-between px-4 md:px-8">
-                <!-- Логотип, название и навигация -->
                 <div class="flex items-center">
                     <a href="index.html" class="flex items-center mr-6 md:mr-8 no-underline hover:opacity-90 transition-opacity" aria-label="На главную">
                         <div class="w-8 h-8 md:w-11 md:h-11 logo-gradient rounded-md flex items-center justify-center mr-3">
-                            <span class="brand-font text-white text-xl md:text-2xl font-bold">B</span>
+                            <span class="brand-font text-white text-xl md:text-2xl font-bold">C</span>
                         </div>
-                        <span class="brand-font text-black text-xl md:text-2xl font-bold logo-text">Blossom</span>
+                        <span class="brand-font text-black text-xl md:text-2xl font-bold logo-text">Cleanly</span>
                     </a>
-                    <!-- Навигационные ссылки для десктопа -->
                     <div class="desktop-nav-links hidden md:flex gap-6 md:gap-8">
-                        <a href="#" class="text-base md:text-lg text-gray-700 hover:text-purple-600 transition-colors whitespace-nowrap">Главная</a>
-                        <a href="pages/catalog.html" class="text-base md:text-lg text-gray-700 hover:text-purple-600 transition-colors whitespace-nowrap">Каталог</a>
-                        <a href="pages/faq.html" class="text-base md:text-lg text-gray-700 hover:text-purple-600 transition-colors whitespace-nowrap">Помощь</a>
+                        <a href="#" class="text-base md:text-lg text-gray-700 hover:text-sky-600 transition-colors whitespace-nowrap">Главная</a>
+                        <a href="pages/catalog.html" class="text-base md:text-lg text-gray-700 hover:text-sky-600 transition-colors whitespace-nowrap">Каталог</a>
+                        <a href="pages/faq.html" class="text-base md:text-lg text-gray-700 hover:text-sky-600 transition-colors whitespace-nowrap">Помощь</a>
+                        <a href="pages/admin.html" class="admin-nav-link hidden" data-admin-link><i class="fa-solid fa-shield-halved"></i> Админ-панель</a>
                     </div>
                 </div>
-                
-                <!-- Кнопки справа для десктопа -->
                 <div class="desktop-buttons hidden md:flex items-center gap-3 md:gap-4">
                     <button class="cart-open-btn flex items-center border border-gray-300 rounded-md px-3 md:px-4 py-2 hover:bg-gray-50 transition-colors whitespace-nowrap relative">
                         <i class="fas fa-shopping-cart text-gray-700 mr-2"></i>
@@ -62,18 +57,17 @@
                     </div>
                 </div>
                 
-                <!-- Бургер-меню для мобильных -->
                 <div class="burger-menu md:hidden flex flex-col cursor-pointer">
                     <div class="burger-line"></div>
                     <div class="burger-line"></div>
                     <div class="burger-line"></div>
                 </div>
                 
-                <!-- Мобильное меню -->
                 <div class="mobile-menu">
                     <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded">Главная</a>
                     <a href="pages/catalog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded">Каталог</a>
                     <a href="pages/faq.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded">Помощь</a>
+                    <a href="pages/admin.html" class="admin-nav-link mobile hidden" data-admin-link><i class="fa-solid fa-shield-halved"></i> Админ-панель</a>
                     <button class="cart-open-btn w-full flex items-center justify-center border border-gray-300 rounded-md px-4 py-2 mt-2 hover:bg-gray-50 transition-colors relative">
                         <i class="fas fa-shopping-cart text-gray-700 mr-2"></i>
                         <span class="font-semibold text-gray-700">Корзина</span>
@@ -100,51 +94,39 @@
             </div>
         </nav>
 
-        <!-- Основной контент -->
         <div class="main-content pt-20">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <!-- Заголовок -->
-                <h1 class="brand-font text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-4 md:mb-6">Blossom</h1>
+                <h1 class="brand-font text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-4 md:mb-6">Cleanly</h1>
                 
-                <!-- Подзаголовок -->
-                <p class="text-lg md:text-xl text-gray-700 mb-2 subtitle">Интернет магазин товаров и услуг красоты</p>
-                
-                <!-- Преимущества -->
-                <p class="text-lg md:text-xl font-semibold mb-8 md:mb-10 advantages" style="color: #be123c;">
-                    Мгновенная доставка • Натуральные продукты • Гарантия качества
+                <p class="text-lg md:text-xl text-gray-700 mb-2 subtitle">Интернет-магазин хозяйственных товаров для дома</p>
+                <p class="text-lg md:text-xl font-semibold mb-8 md:mb-10 advantages" style="color: #0284c7;">
+                    Быстрая доставка • Качественная очистка • Гарантия качества
                 </p>
-                
-                <!-- Поле поиска -->
                 <div class="max-w-2xl mx-auto bg-white search-shadow rounded-lg h-12 flex items-center px-4 mb-8 md:mb-10 search-container">
                     <input 
                         id="mainSearchInput"
                         type="text" 
-                        placeholder="Искать косметику, уход, процедуры..." 
+                        placeholder="Искать моющие средства, губки, товары для дома..." 
                         class="w-full h-full outline-none text-sm md:text-base font-medium text-gray-400 search-input"
                     >
                     <button id="mainSearchButton" class="w-6 h-6 md:w-8 md:h-8 flex items-center justify-center">
-                        <i class="fas fa-search text-purple-500/60 text-base"></i>
+                        <i class="fas fa-search text-sky-500/60 text-base"></i>
                     </button>
                 </div>
-                
             </div>
         </div>
 
-        <!-- Футер -->
         <footer class="footer text-white rounded-t-3xl pt-8 pb-6 mt-auto">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 footer-content">
-                    <!-- Логотип и описание -->
                     <div class="md:col-span-1">
-                        <h3 class="brand-font text-lg font-semibold mb-2">Blossom</h3>
+                        <h3 class="brand-font text-lg font-semibold mb-2">Cleanly</h3>
                         <p class="text-base text-white/50 leading-5">
-                            Интернет-магазин товаров красоты и здоровья.<br> Безопасность, скорость и гарантия качества.
+                            Интернет-магазин хозяйственных товаров для дома.<br> Качество, удобство и доступные цены.
                         </p>
                     </div>
                     
-                    <!-- Правая сторона - остальные разделы -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <!-- Покупателям -->
                         <div>
                             <h4 class="font-bold text-base mb-4">Покупателям</h4>
                             <ul class="space-y-2 text-sm text-white/50">
@@ -155,17 +137,16 @@
                             </ul>
                         </div>
                         
-                        <!-- Контакты -->
                         <div>
                             <h4 class="font-bold text-base mb-4">Контакты</h4>
                             <ul class="space-y-2 text-sm text-white/50">
                                 <li class="flex items-center">
                                     <i class="fas fa-envelope mr-2"></i>
-                                    <a href="mailto:support@blossom.store" class="hover:text-white transition-colors">support@blossom.store</a>
+                                    <a href="mailto:support@cleanly.store" class="hover:text-white transition-colors">support@cleanly.store</a>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-headset mr-2"></i>
-                                    <a href="mailto:support@blossom.store" class="hover:text-white transition-colors">Техническая поддержка</a>
+                                    <a href="mailto:support@cleanly.store" class="hover:text-white transition-colors">Техническая поддержка</a>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fab fa-telegram mr-2"></i>
@@ -180,7 +161,6 @@
     </div>
 
     <script>
-        // Бургер-меню
         const burgerMenu = document.querySelector('.burger-menu');
         const mobileMenu = document.querySelector('.mobile-menu');
         const mainSearchInput = document.getElementById('mainSearchInput');
@@ -191,7 +171,6 @@
             burgerMenu.classList.toggle('active');
         });
         
-        // Закрытие меню при клике вне его
         document.addEventListener('click', function(event) {
             if (!burgerMenu.contains(event.target) && !mobileMenu.contains(event.target)) {
                 mobileMenu.classList.remove('active');
@@ -217,8 +196,6 @@
                 goToCatalog();
             }
         });
-
-        // Кнопки "Начать покупки" / "Стать продавцом" удалены с главной
     </script>
 
     <div id="cartOverlay" class="cart-overlay"></div>

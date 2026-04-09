@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blossom - Интернет магазин цифровых товаров и услуг</title>
+    <title>Cleanly - Каталог хозяйственных товаров</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,25 +12,25 @@
     <link rel="stylesheet" href="../styles/catalog.css">
 
     <link rel="shortcut icon" href="../assets/image/favicon.ico" />
-    <meta name="apple-mobile-web-app-title" content="Aetheria" />
+    <meta name="apple-mobile-web-app-title" content="Cleanly" />
     <link rel="manifest" href="/site.webmanifest" />
 </head>
 <body>
     <div class="page-container">
-        <!-- Навбар --> 
         <nav class="navbar">
             <div class="w-full h-full flex items-center justify-between px-4 md:px-8">
                 <div class="flex items-center">
                     <a href="../index.html" class="flex items-center mr-6 md:mr-8 no-underline hover:opacity-90 transition-opacity" aria-label="На главную">
                         <div class="w-8 h-8 md:w-11 md:h-11 logo-gradient rounded-md flex items-center justify-center mr-3">
-                            <span class="brand-font text-white text-xl md:text-2xl font-bold">B</span>
+                            <span class="brand-font text-white text-xl md:text-2xl font-bold">C</span>
                         </div>
-                        <span class="brand-font text-black text-xl md:text-2xl font-bold logo-text">Blossom</span>
+                        <span class="brand-font text-black text-xl md:text-2xl font-bold logo-text">Cleanly</span>
                     </a>
                     <div class="desktop-nav-links hidden md:flex gap-6 md:gap-8">
-                        <a href="../index.html" class="text-base md:text-lg text-gray-700 hover:text-purple-600 transition-colors whitespace-nowrap">Главная</a>
-                        <a href="./catalog.html" class="text-base md:text-lg text-gray-700 hover:text-purple-600 transition-colors whitespace-nowrap active">Каталог</a>
-                        <a href="faq.html" class="text-base md:text-lg text-gray-700 hover:text-purple-600 transition-colors whitespace-nowrap">Помощь</a>
+                        <a href="../index.html" class="text-base md:text-lg text-gray-700 hover:text-sky-600 transition-colors whitespace-nowrap">Главная</a>
+                        <a href="./catalog.html" class="text-base md:text-lg text-gray-700 hover:text-sky-600 transition-colors whitespace-nowrap active">Каталог</a>
+                        <a href="faq.html" class="text-base md:text-lg text-gray-700 hover:text-sky-600 transition-colors whitespace-nowrap">Помощь</a>
+                        <a href="./admin.html" class="admin-nav-link hidden" data-admin-link><i class="fa-solid fa-shield-halved"></i> Админ-панель</a>
                     </div>
                 </div>
 
@@ -59,18 +59,17 @@
                     </div>
                 </div>
 
-                <!-- Бургер-меню для мобильных -->
                 <div class="burger-menu md:hidden flex flex-col cursor-pointer">
                     <div class="burger-line"></div>
                     <div class="burger-line"></div>
                     <div class="burger-line"></div>
                 </div>
 
-                <!-- Мобильное меню -->
                 <div class="mobile-menu">
                     <a href="../index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded">Главная</a>
                     <a href="./catalog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded">Каталог</a>
                     <a href="faq.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded">Помощь</a>
+                    <a href="./admin.html" class="admin-nav-link mobile hidden" data-admin-link><i class="fa-solid fa-shield-halved"></i> Админ-панель</a>
                     <button class="cart-open-btn w-full flex items-center justify-center border border-gray-300 rounded-md px-4 py-2 mt-2 hover:bg-gray-50 transition-colors relative">
                         <i class="fas fa-shopping-cart text-gray-700 mr-2"></i>
                         <span class="font-semibold text-gray-700">Корзина</span>
@@ -97,10 +96,8 @@
             </div>
         </nav>
 
-        <!-- Контент каталога -->
         <main class="catalog-wrapper pt-6 pb-12">
             <div class="max-w-7xl mx-auto px-4 lg:px-8 flex flex-col lg:flex-row gap-6">
-                <!-- Сайдбар -->
                 <div class="lg:w-1/5 lg:order-1">
                     <aside class="catalog-sidebar">
                         <a href="./catalog.html" class="sidebar-item active" title="Главная">
@@ -118,12 +115,10 @@
                     </aside>
                 </div>
 
-                <!-- Правая колонка -->
                 <section class="lg:w-4/5 order-1 lg:order-2">
-                    <!-- Поиск и действия -->
                     <div class="catalog-search-bar">
                         <div class="search-field">
-                            <input id="catalogSearch" type="text" placeholder="Искать косметику, уход, процедуры..." class="search-input">
+                            <input id="catalogSearch" type="text" placeholder="Искать моющие средства, губки, товары для дома..." class="search-input">
                             <button aria-label="Поиск" class="search-icon">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -147,17 +142,16 @@
                             </div>
                         </div>
 
-                        <!-- Панель фильтров -->
                         <div id="filterPanel" class="filter-panel">
                             <div class="filter-header">
-                                <span class="font-semibold">Категории красоты</span>
+                                <span class="font-semibold">Категории товаров</span>
                                 <button id="filterClose" aria-label="Закрыть фильтр" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
                             </div>
                             <div class="filter-body">
-                                <label class="filter-checkbox"><input type="checkbox" value="Уход за кожей" checked> Уход за кожей</label>
-                                <label class="filter-checkbox"><input type="checkbox" value="Косметика" checked> Косметика и макияж</label>
-                                <label class="filter-checkbox"><input type="checkbox" value="Уход за телом" checked> Уход за телом</label>
-                                <label class="filter-checkbox"><input type="checkbox" value="Волосы и ногти" checked> Волосы и ногти</label>
+                                <label class="filter-checkbox"><input type="checkbox" value="Чистящие средства" checked> Чистящие средства</label>
+                                <label class="filter-checkbox"><input type="checkbox" value="Кухонные принадлежности" checked> Кухонные принадлежности</label>
+                                <label class="filter-checkbox"><input type="checkbox" value="Стирка и уход за бельём" checked> Стирка и уход за бельём</label>
+                                <label class="filter-checkbox"><input type="checkbox" value="Товары для дома" checked> Товары для дома</label>
                             </div>
                             <div class="filter-footer">
                                 <button id="filterApply" class="apply-btn">Применить</button>
@@ -166,28 +160,24 @@
                         </div>
                     </div>
 
-                    <!-- Рекомендации -->
                     <div class="recommendations-header">
                         <h2 class="text-xl font-semibold text-gray-800">Рекомендации</h2>
                     </div>
 
                     <div class="product-block">
-                        <div id="productGrid" class="product-grid">
-                            <!-- Карточки товаров будут добавлены скриптом -->
-                        </div>
+                        <div id="productGrid" class="product-grid"></div>
                     </div>
                 </section>
             </div>
         </main>
 
-        <!-- Футер -->
         <footer class="footer text-white rounded-t-3xl pt-8 pb-6 mt-auto">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 footer-content">
                     <div class="md:col-span-1">
-                        <h3 class="brand-font text-lg font-semibold mb-2">AETHERIA</h3>
+                        <h3 class="brand-font text-lg font-semibold mb-2">Cleanly</h3>
                         <p class="text-base text-white/50 leading-5">
-                            Интернет-магазин товаров красоты и здоровья.<br> Безопасность, скорость и гарантия качества.
+                            Интернет-магазин хозяйственных товаров для дома.<br> Качество, удобство и доступные цены.
                         </p>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -205,11 +195,11 @@
                             <ul class="space-y-2 text-sm text-white/50">
                                 <li class="flex items-center">
                                     <i class="fas fa-envelope mr-2"></i>
-                                    <a href="mailto:support@blossom.store" class="hover:text-white transition-colors">support@blossom.store</a>
+                                    <a href="mailto:support@cleanly.store" class="hover:text-white transition-colors">support@cleanly.store</a>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-headset mr-2"></i>
-                                    <a href="mailto:support@blossom.store" class="hover:text-white transition-colors">Техническая поддержка</a>
+                                    <a href="mailto:support@cleanly.store" class="hover:text-white transition-colors">Техническая поддержка</a>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fab fa-telegram mr-2"></i>
@@ -248,15 +238,12 @@
         </div>
     </aside>
 
-    <!-- Модальное окно для большой карточки товара -->
     <div id="productModalOverlay" class="product-modal-overlay">
         <div class="product-modal">
             <button id="productModalClose" class="product-modal-close" aria-label="Закрыть">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <div id="productModalContent" class="product-modal-content">
-                <!-- Контент будет добавлен скриптом -->
-            </div>
+            <div id="productModalContent" class="product-modal-content"></div>
         </div>
     </div>
 

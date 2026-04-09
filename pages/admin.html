@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleanly — Админ-панель</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/cart.css">
+    <link rel="stylesheet" href="../styles/admin.css">
+    <link rel="shortcut icon" href="../assets/image/favicon.ico" />
+</head>
+<body>
+    <div class="page-container">
+        <nav class="navbar">
+            <div class="w-full h-full flex items-center justify-between px-4 md:px-8">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center mr-6 md:mr-8 no-underline hover:opacity-90 transition-opacity">
+                        <div class="w-8 h-8 md:w-11 md:h-11 logo-gradient rounded-md flex items-center justify-center mr-3">
+                            <span class="brand-font text-white text-xl md:text-2xl font-bold">C</span>
+                        </div>
+                        <span class="brand-font text-black text-xl md:text-2xl font-bold logo-text">Cleanly</span>
+                    </a>
+                    <div class="desktop-nav-links hidden md:flex gap-6 md:gap-8">
+                        <a href="../index.html" class="text-base md:text-lg text-gray-700 hover:text-sky-600 transition-colors">Главная</a>
+                        <a href="./catalog.html" class="text-base md:text-lg text-gray-700 hover:text-sky-600 transition-colors">Каталог</a>
+                        <a href="./admin.html" class="text-base md:text-lg text-sky-600 font-semibold transition-colors">Админ-панель</a>
+                    </div>
+                </div>
+                <div class="desktop-buttons hidden md:flex items-center gap-3 md:gap-4">
+                    <div class="auth-controls">
+                        <button class="auth-open-btn text-base md:text-lg" data-auth-open>
+                            <i class="fas fa-user"></i>
+                            <span data-auth-label>Войти</span>
+                        </button>
+                        <div class="auth-user-chip hidden" data-auth-chip>
+                            <div class="auth-user-avatar" data-auth-avatar>A</div>
+                            <div class="auth-user-meta">
+                                <span class="auth-user-name" data-auth-name>Admin</span>
+                            </div>
+                        </div>
+                        <button class="auth-logout-btn hidden" data-auth-logout>
+                            <i class="fa-solid fa-right-from-bracket"></i><span>Выйти</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="burger-menu md:hidden flex flex-col cursor-pointer">
+                    <div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div>
+                </div>
+                <div class="mobile-menu">
+                    <a href="../index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded">Главная</a>
+                    <a href="./catalog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded">Каталог</a>
+                    <div class="flex flex-col gap-2 mt-2">
+                        <button class="auth-open-btn w-full justify-center" data-auth-open>
+                            <i class="fas fa-user"></i><span data-auth-label>Войти</span>
+                        </button>
+                        <button class="auth-logout-btn hidden w-full justify-center" data-auth-logout>
+                            <i class="fa-solid fa-right-from-bracket"></i><span>Выйти</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <main class="admin-main">
+            <div id="adminAccessDenied" class="admin-denied hidden">
+                <i class="fa-solid fa-lock"></i>
+                <h2>Доступ запрещён</h2>
+                <p>Войдите как администратор для доступа к панели управления.</p>
+                <button class="admin-login-btn" data-auth-open>Войти</button>
+            </div>
+
+            <div id="adminPanel" class="admin-panel hidden">
+                <div class="admin-header">
+                    <h1 class="admin-title"><i class="fa-solid fa-shield-halved"></i> Админ-панель</h1>
+                </div>
+
+                <div class="admin-tabs">
+                    <button class="admin-tab active" data-tab="products"><i class="fa-solid fa-boxes-stacked"></i> Товары</button>
+                    <button class="admin-tab" data-tab="add"><i class="fa-solid fa-plus"></i> Добавить</button>
+                    <button class="admin-tab" data-tab="orders"><i class="fa-solid fa-receipt"></i> Заказы</button>
+                </div>
+
+                <div class="admin-content">
+                    <!-- Товары -->
+                    <section id="tabProducts" class="admin-section">
+                        <div class="admin-toolbar">
+                            <input id="adminProductSearch" type="text" placeholder="Поиск по товарам..." class="admin-search">
+                            <span id="adminProductCount" class="admin-count"></span>
+                        </div>
+                        <div class="admin-table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr><th>ID</th><th>Название</th><th>Категория</th><th>Цена</th><th>Бренд</th><th></th></tr>
+                                </thead>
+                                <tbody id="adminProductsBody"></tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Добавление -->
+                    <section id="tabAdd" class="admin-section hidden">
+                        <div class="admin-add-layout">
+                            <form id="addProductForm" class="admin-form">
+                                <h2>Новый товар</h2>
+                                <div class="admin-field">
+                                    <label>Название</label>
+                                    <input name="title" type="text" required placeholder="Средство для мытья...">
+                                </div>
+                                <div class="admin-field">
+                                    <label>Описание</label>
+                                    <textarea name="desc" rows="3" required placeholder="Краткое описание товара"></textarea>
+                                </div>
+                                <div class="admin-row">
+                                    <div class="admin-field">
+                                        <label>Цена (₽)</label>
+                                        <input name="price" type="number" min="1" required placeholder="990">
+                                    </div>
+                                    <div class="admin-field">
+                                        <label>Категория</label>
+                                        <select name="label" required>
+                                            <option value="Чистящие средства">Чистящие средства</option>
+                                            <option value="Кухонные принадлежности">Кухонные принадлежности</option>
+                                            <option value="Стирка и уход за бельём">Стирка и уход за бельём</option>
+                                            <option value="Товары для дома">Товары для дома</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="admin-row">
+                                    <div class="admin-field">
+                                        <label>Бренд</label>
+                                        <input name="brand" type="text" placeholder="CleanHome">
+                                    </div>
+                                    <div class="admin-field">
+                                        <label>Рейтинг</label>
+                                        <input name="rating" type="number" min="1" max="5" step="0.1" value="4.5">
+                                    </div>
+                                </div>
+                                <div class="admin-field">
+                                    <label>URL картинки</label>
+                                    <input name="image" type="text" placeholder="../assets/image/face1.jpg">
+                                </div>
+                                <button type="submit" class="admin-submit"><i class="fa-solid fa-plus"></i> Добавить товар</button>
+                            </form>
+                            <div class="admin-preview">
+                                <h3>Предпросмотр</h3>
+                                <div id="previewCard" class="preview-card">
+                                    <div class="preview-image"><img src="" alt="Предпросмотр" id="previewImg"></div>
+                                    <div class="preview-body">
+                                        <span class="preview-badge" id="previewLabel">Категория</span>
+                                        <span class="preview-price" id="previewPrice">0 ₽</span>
+                                        <div class="preview-title" id="previewTitle">Название товара</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Заказы -->
+                    <section id="tabOrders" class="admin-section hidden">
+                        <div class="admin-toolbar">
+                            <span id="adminOrderCount" class="admin-count"></span>
+                        </div>
+                        <div id="adminOrdersList" class="admin-orders-list"></div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="cartOverlay" class="cart-overlay"></div>
+    <aside id="cartDrawer" class="cart-drawer">
+        <div class="cart-header">
+            <div><p class="cart-title">Корзина</p><p class="cart-subtitle">Добавьте товары и оформите заказ</p></div>
+            <button id="cartClose" class="cart-close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="cartItems" class="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-summary"><span>Итого</span><span id="cartTotal" class="cart-total">0 ₽</span></div>
+            <input id="cartEmail" class="cart-email" type="email" placeholder="Ваша почта для чека" />
+            <div class="cart-actions">
+                <button id="cartClear" class="cart-clear">Очистить</button>
+                <button id="cartCheckout" class="cart-checkout">Оформить</button>
+            </div>
+        </div>
+    </aside>
+
+    <script src="../scripts/products.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/cart.js"></script>
+    <script src="../scripts/theme.js"></script>
+    <script src="../scripts/admin.js"></script>
+</body>
+</html>
